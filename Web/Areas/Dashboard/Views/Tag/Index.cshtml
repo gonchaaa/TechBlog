@@ -1,0 +1,10 @@
+﻿@model List<Tag>
+<div>
+
+    <a href="/dashboard/tag/create" class="btn btn-success">Create</a>
+</div>
+
+@foreach(var tag in Model)
+{
+    <p>@tag.TagName</p>
+}
