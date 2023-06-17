@@ -9,6 +9,7 @@
         public User User { get; set; }
         public int Views { get; set; }
         public string SeoUurl { get; set; }
+        public List<ArticleTag> ArticleTags { get; set; }
 
     }
 }

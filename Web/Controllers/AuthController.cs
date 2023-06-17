@@ -9,12 +9,14 @@ namespace Web.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IHttpContextAccessor _httpContext;
 
 
-        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _httpContext = httpContext;
         }
 
         public IActionResult Login()
@@ -26,6 +28,7 @@ namespace Web.Controllers
          public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
 
+            
             var finduser = await _userManager.FindByEmailAsync(loginDTO.Email);
             if (finduser == null)
             {
@@ -34,6 +37,15 @@ namespace Web.Controllers
             Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(finduser,loginDTO.Password,false,false);
             if (result.Succeeded)
             {
+                string c = _httpContext.HttpContext.Request.Query["controller"];
+                string a = _httpContext.HttpContext.Request.Query["action"];
+                string i = _httpContext.HttpContext.Request.Query["id"];
+                if (!string.IsNullOrWhiteSpace(c))
+                {
+                    return RedirectToAction(a,c,new {id=i});
+                }
+
+
                 return RedirectToAction("Index","Home");
             }
             
@@ -66,5 +78,12 @@ namespace Web.Controllers
             }
             return View(registerDTO);
         }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+           await _signInManager.SignOutAsync();
+            return RedirectToAction("Index","Home");
+        }
+
     }
 }

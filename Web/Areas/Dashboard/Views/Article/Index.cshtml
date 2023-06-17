@@ -1,5 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿
+
+@model List<Article>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <a href="/dashboard/article/create">Create </a>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                        <th>PhotoUrl</th>
+                            <th>User</th>
+                            <th>Views</th>
+                            <th>Tags</th>
+                            <th>Settings</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var article in Model)
+                    {
+                        
+                        <tr>
+                            <td>
+                                <img src="@article.PhotoUrl" width="150" height="150">
+                            </td>
+                            <td>@article.Title</td>
+                            <td>@article.User.FirstName @article.User.LastName </td>
+                            <td>@article.Views</td>
+                            <td>
+                                @foreach (var tag in article.ArticleTags)
+                                {
+                                    <span class="badge badge-success">@tag.Tag.TagName</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-success" href="/dashboard/article/edit/@article.Id">Edit</a>
+                                <a class="btn btn-primary" href="/dashboard/article/detail/@article.Id">Detail</a>
+                                <a class="btn btn-danger" href="/dashboard/article/delete/@article.Id">Delete</a>
+
+
+                            </td>
+                        </tr>
+                    }
+                 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@section Scripts{
+    <script src="~/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/admin/js/demo/datatables-demo.js"></script>
 }

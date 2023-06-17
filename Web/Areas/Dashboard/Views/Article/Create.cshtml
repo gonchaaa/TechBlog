@@ -1,4 +1,4 @@
-﻿<form method="post"> 
+﻿<form method="post" enctype="multipart/form-data"> 
     <div class="card">
         <h1 class="card-title">
             Create article
@@ -12,7 +12,7 @@
             <input type="text" name="Content" class="form-control" placeholder="Content" />
         </div>
         <div class="form-group">
-            <input type="text" name="PhotoUrl" class="form-control" placeholder="PhotoUrl" />
+            <input type="file" name="newPhoto" class="form-control" placeholder="PhotoUrl" />
         </div>
         <div class="form-group">
             <select name="tagIds" asp-items="@ViewBag.Tags" multiple>

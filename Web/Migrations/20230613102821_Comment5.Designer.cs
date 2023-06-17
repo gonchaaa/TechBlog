@@ -12,8 +12,8 @@ using Web.Data;
 namespace Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230531155451_mig_3")]
-    partial class mig_3
+    [Migration("20230613102821_Comment5")]
+    partial class Comment5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,34 @@ namespace Web.Migrations
                     b.ToTable("ArticleTags");
                 });
 
+            modelBuilder.Entity("Web.Models.Comments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("Web.Models.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -400,7 +428,7 @@ namespace Web.Migrations
             modelBuilder.Entity("Web.Models.ArticleTag", b =>
                 {
                     b.HasOne("Web.Models.Article", "Article")
-                        .WithMany()
+                        .WithMany("ArticleTags")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -414,6 +442,30 @@ namespace Web.Migrations
                     b.Navigation("Article");
 
                     b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("Web.Models.Comments", b =>
+                {
+                    b.HasOne("Web.Models.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Web.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Web.Models.Article", b =>
+                {
+                    b.Navigation("ArticleTags");
                 });
 #pragma warning restore 612, 618
         }

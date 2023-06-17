@@ -20,7 +20,7 @@ namespace Web.Controllers
 
         public IActionResult Index()
         {
-           var articles=_appDbContext.Articles.Include(x=>x.User).ToList();
+           var articles=_appDbContext.Articles.Include(x=>x.User).Include(z=>z.ArticleTags).OrderByDescending(z=>z.Id).ToList();
            var tags= _appDbContext.Tags.ToList();
             HomeVM vm = new()
             {
