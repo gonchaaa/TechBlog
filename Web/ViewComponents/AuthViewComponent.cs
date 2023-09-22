@@ -17,8 +17,8 @@ namespace Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user= await _userManager.FindByEmailAsync(userId);
-            return View("Auth", user);
+            var user= await _userManager.FindByIdAsync(userId);
+            return View("Default", user);
         }
 
     }

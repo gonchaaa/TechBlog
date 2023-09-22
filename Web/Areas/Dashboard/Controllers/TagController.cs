@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using Web.Data;
 using Web.Models;
 
 namespace Web.Areas.Dashboard.Controllers
 {
     [Area(nameof(Dashboard))]
+    [Authorize(Roles = "Admin,Moderator")]
+
     public class TagController : Controller
     {
         private readonly AppDbContext _context;
@@ -17,12 +21,16 @@ namespace Web.Areas.Dashboard.Controllers
             var tags=_context.Tags.ToList();
             return View(tags);
         }
+        [Authorize(Roles = "Admin")]
+
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+
         public IActionResult Create(Tag tag)
         {
             try

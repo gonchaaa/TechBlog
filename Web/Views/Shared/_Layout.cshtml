@@ -431,11 +431,16 @@
                         <ul class="navbar-nav mr-2">
                             @if (User.Identity.IsAuthenticated)
                             {
-                             @(await Component.InvokeAsync("Auth"))
+                                @(
+                                   await Component.InvokeAsync("Auth")
+                                   )
                             }
-                            <li class="nav-item">
+                            else
+                            {
+                                <li class="nav-item">
                                 <a class="nav-link" href="/auth/login">Login</a>
                             </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="fa fa-apple"></i></a>
                             </li>

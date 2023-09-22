@@ -10,7 +10,7 @@ using Web.Models;
 namespace Web.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
-    [Authorize]
+    [Authorize(Roles ="Admin,Moderator")]
     public class ArticleController : Controller
     {
         private readonly AppDbContext _context;
@@ -56,7 +56,7 @@ namespace Web.Areas.Dashboard.Controllers
                 article.CreatedDate = DateTime.Now;
                 article.UpdatedDate = DateTime.Now;
                 await _context.Articles.AddAsync(article);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); 
                 for (int i = 0; i < tagIds.Count; i++)
                 {
                     ArticleTag articletag = new()

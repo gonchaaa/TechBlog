@@ -71,7 +71,10 @@ namespace Web.Controllers
                 Email = registerDTO.Email
             };
 
-            IdentityResult result = await _userManager.CreateAsync(user, registerDTO.Password);
+            
+           IdentityResult result = await _userManager.CreateAsync(user, registerDTO.Password);
+            await _userManager.AddToRoleAsync(user,"User");
+            
             if (result.Succeeded)
             {
                 return RedirectToAction("Login");

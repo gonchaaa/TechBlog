@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Areas.Dashboard.Controllers
 {
     [Area(nameof(Dashboard))]
-    [Authorize]
+    [Authorize(Roles ="Admin,Moderator")]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -2,4 +2,9 @@
 
 <li class="nav-item">
     <a class="nav-link" href="/dashboard/">@Model.FirstName @Model.LastName<a>
+      
+                <form method="post" asp-area="" asp-controller="Auth" asp-action="Logout">
+       
+                    <input value="Logout" type="submit" />
+                </form>
 </li>
